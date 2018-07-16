@@ -42,12 +42,12 @@ defmodule FlashCards.Cards do
 
   ## Examples
 
-      iex> get_last
+      iex> get_last_translation
       %Translation{}
 
   """
 
-  def get_last, do: Repo.one(from x in Translation, order_by: [desc: x.id], limit: 1)
+  def get_last_translation, do: Repo.one(from(x in Translation, order_by: [desc: x.id], limit: 1))
 
   @doc """
   Creates a translation.

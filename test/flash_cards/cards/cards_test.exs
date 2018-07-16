@@ -24,6 +24,11 @@ defmodule FlashCards.CardsTest do
       assert Cards.list_translations() == [translation]
     end
 
+    test "get_last_translation/0 return the translation with highest id" do
+      translation = translation_fixture()
+      assert Cards.get_last_translation() == translation
+    end
+
     test "get_translation!/1 returns the translation with given id" do
       translation = translation_fixture()
       assert Cards.get_translation!(translation.id) == translation
