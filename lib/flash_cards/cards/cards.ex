@@ -113,4 +113,37 @@ defmodule FlashCards.Cards do
   def change_translation(%Translation{} = translation) do
     Translation.changeset(translation, %{})
   end
+
+  @doc """
+  Gets a random Translation with a `false` correct attribute.
+
+  ## Examples
+
+  iex> get_random_incorrect_translation()
+  %Translation{}
+
+  """
+  def get_random_incorrect_translation do
+    Translation
+    |> incorrect_translations
+    |> Repo.all()
+    |> Enum.random()
+  end
+
+  @doc """
+  Returns a list of incorrect translations.
+
+  ## Examples
+
+  iex> incorrect_translations()
+  [%Translation{}, ...]
+
+  """
+  def incorrect_translations(query) do
+    from(
+      t in query,
+      where: t.correct == false,
+      select: t
+    )
+  end
 end

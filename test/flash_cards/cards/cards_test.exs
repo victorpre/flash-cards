@@ -70,5 +70,11 @@ defmodule FlashCards.CardsTest do
       translation = translation_fixture()
       assert %Ecto.Changeset{} = Cards.change_translation(translation)
     end
+
+    test "get_random_incorrect_translation/0 returns a translation which is not correct" do
+      translation_fixture()
+      incorrect_translation = translation_fixture(@update_attrs)
+      assert Cards.get_random_incorrect_translation == incorrect_translation
+    end
   end
 end
