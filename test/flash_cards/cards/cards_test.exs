@@ -6,8 +6,8 @@ defmodule FlashCards.CardsTest do
   describe "translations" do
     alias FlashCards.Cards.Translation
 
-    @valid_attrs %{correct: true, word_de: "some word_de", word_en: "some word_en"}
-    @update_attrs %{correct: false, word_de: "some updated word_de", word_en: "some updated word_en"}
+    @valid_attrs %{correct: false, word_de: "some word_de", word_en: "some word_en"}
+    @update_attrs %{correct: true, word_de: "some updated word_de", word_en: "some updated word_en"}
     @invalid_attrs %{correct: nil, word_de: nil, word_en: nil}
 
     def translation_fixture(attrs \\ %{}) do
@@ -36,7 +36,7 @@ defmodule FlashCards.CardsTest do
 
     test "create_translation/1 with valid data creates a translation" do
       assert {:ok, %Translation{} = translation} = Cards.create_translation(@valid_attrs)
-      assert translation.correct == true
+      assert translation.correct == false
       assert translation.word_de == "some word_de"
       assert translation.word_en == "some word_en"
     end
@@ -49,7 +49,7 @@ defmodule FlashCards.CardsTest do
       translation = translation_fixture()
       assert {:ok, translation} = Cards.update_translation(translation, @update_attrs)
       assert %Translation{} = translation
-      assert translation.correct == false
+      assert translation.correct == true
       assert translation.word_de == "some updated word_de"
       assert translation.word_en == "some updated word_en"
     end
@@ -72,8 +72,8 @@ defmodule FlashCards.CardsTest do
     end
 
     test "get_random_incorrect_translation/0 returns a translation which is not correct" do
-      translation_fixture()
-      incorrect_translation = translation_fixture(@update_attrs)
+      translation_fixture(@update_attrs)
+      incorrect_translation = translation_fixture()
       assert Cards.get_random_incorrect_translation == incorrect_translation
     end
   end
