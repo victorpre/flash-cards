@@ -42,12 +42,12 @@ defmodule FlashCards.Cards do
 
   ## Examples
 
-      iex> get_last
+      iex> get_last_translation
       %Translation{}
 
   """
 
-  def get_last, do: Repo.one(from x in Translation, order_by: [desc: x.id], limit: 1)
+  def get_last_translation, do: Repo.one(from(x in Translation, order_by: [desc: x.id], limit: 1))
 
   @doc """
   Creates a translation.
@@ -112,5 +112,38 @@ defmodule FlashCards.Cards do
   """
   def change_translation(%Translation{} = translation) do
     Translation.changeset(translation, %{})
+  end
+
+  @doc """
+  Gets a random Translation with a `false` correct attribute.
+
+  ## Examples
+
+  iex> get_random_incorrect_translation()
+  %Translation{}
+
+  """
+  def get_random_incorrect_translation do
+    Translation
+    |> incorrect_translations
+    |> Repo.all()
+    |> Enum.random()
+  end
+
+  @doc """
+  Returns a list of incorrect translations.
+
+  ## Examples
+
+  iex> incorrect_translations()
+  [%Translation{}, ...]
+
+  """
+  def incorrect_translations(query) do
+    from(
+      t in query,
+      where: t.correct == false,
+      select: t
+    )
   end
 end

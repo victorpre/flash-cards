@@ -24,6 +24,11 @@ defmodule FlashCards.CardsTest do
       assert Cards.list_translations() == [translation]
     end
 
+    test "get_last_translation/0 return the translation with highest id" do
+      translation = translation_fixture()
+      assert Cards.get_last_translation() == translation
+    end
+
     test "get_translation!/1 returns the translation with given id" do
       translation = translation_fixture()
       assert Cards.get_translation!(translation.id) == translation
@@ -64,6 +69,12 @@ defmodule FlashCards.CardsTest do
     test "change_translation/1 returns a translation changeset" do
       translation = translation_fixture()
       assert %Ecto.Changeset{} = Cards.change_translation(translation)
+    end
+
+    test "get_random_incorrect_translation/0 returns a translation which is not correct" do
+      translation_fixture()
+      incorrect_translation = translation_fixture(@update_attrs)
+      assert Cards.get_random_incorrect_translation == incorrect_translation
     end
   end
 end
