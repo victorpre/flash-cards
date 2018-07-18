@@ -39,4 +39,9 @@ defmodule FlashCardsWeb.TranslationController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def random(conn, _params) do
+    translation = Cards.get_random_incorrect_translation()
+    render(conn, "show.json", translation: translation)
+  end
 end

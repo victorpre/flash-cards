@@ -7,6 +7,8 @@ defmodule FlashCardsWeb.Router do
 
   scope "/api", FlashCardsWeb do
     pipe_through :api
+
+    get "/translations/random/", TranslationController, :random
     resources "/translations", TranslationController
   end
 end
